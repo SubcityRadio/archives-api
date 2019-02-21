@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+import json
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -74,16 +76,20 @@ WSGI_APPLICATION = 'archivesapi.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
+# main_with_json.py
+
+with open(os.path.join(BASE_DIR, 'config.json'), 'r') as f:
+    config = json.load(f)
 
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres', # dbname
-        'USER': 'postgres', # master username
-        'PASSWORD': 'mysecretpassword', # master password
-        'HOST': '127.0.0.1', # Endpoint
-        'PORT': '8001',
+        'NAME': config['DATABASE_NAME'], # dbname
+        'USER': config['DATABASE_USER'], # master username
+        'PASSWORD': config['DATABASE_PASSWORD'], # master password
+        'HOST': config['DATABASE_HOST'], # Endpoint
+        'PORT': '5432',
     }
 }
 
