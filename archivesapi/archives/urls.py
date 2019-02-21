@@ -1,7 +1,7 @@
 from django.urls import path
-from .views import archive_post_year_list, archive_post_year_detail
+from .apiviews import ArchiveYearList, ArchivePostYearDetailList
 
 urlpatterns = [
-    path("year/", archive_post_year_list, name="archive_post_year_list"),
-    path("year/<int:pk>/", archive_post_year_detail, name="archive_post_year_detail")
+    path("years/", ArchiveYearList.as_view(), name="archive_year_list"),
+    path("year/<int:pk>/", ArchivePostYearDetailList.as_view(), name="archive_post_year_detail")
 ]

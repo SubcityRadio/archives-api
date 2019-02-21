@@ -75,12 +75,18 @@ WSGI_APPLICATION = 'archivesapi.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres', # dbname
+        'USER': 'postgres', # master username
+        'PASSWORD': 'mysecretpassword', # master password
+        'HOST': '127.0.0.1', # Endpoint
+        'PORT': '8001',
     }
 }
+
 
 
 # Password validation

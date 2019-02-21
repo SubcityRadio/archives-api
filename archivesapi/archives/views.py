@@ -9,6 +9,5 @@ def archive_post_year_list(request):
 
 def archive_post_year_detail(request, pk):
     year_posts = ArchivePost.objects.filter(year=pk)
-    print(year_posts)
     data = {"results": list(year_posts.values("title", "year", "post_content", "post_summary", "post_image_alt_text"))}
     return JsonResponse(data)

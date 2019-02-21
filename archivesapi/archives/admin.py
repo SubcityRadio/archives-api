@@ -1,5 +1,6 @@
 from django.contrib import admin
 
-from .models import ArchivePost
+from .models import ArchivePost, ArchiveYear
 
 admin.site.register(ArchivePost)
+admin.site.register(ArchiveYear)
