@@ -21,13 +21,17 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
+with open(os.path.join(BASE_DIR, 'config.json'), 'r') as f:
+    config = json.load(f)
+
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'e7mo$_7y3#d0f*7f!*8f@(0_-7kp^b9178j^9nkjrpdsozxfyy'
+SECRET_KEY = config['SECURITY_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+
+ALLOWED_HOSTS = ["subcity-admin.appspot.com", "127.0.0.1"]
 
 
 # Application definition
@@ -40,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'django_s3_storage',
     'archives'
 ]
 
@@ -71,15 +76,34 @@ TEMPLATES = [
     },
 ]
 
+
+
+
+
+
+# The AWS region to connect to.
+AWS_REGION = "eu-west-2"
+
+AWS_ACCESS_KEY_ID = config['AWS_ACCESS_KEY']
+
+AWS_SECRET_ACCESS_KEY = config['AWS_SECRET_KEY']
+
 WSGI_APPLICATION = 'archivesapi.wsgi.application'
+STATICFILES_STORAGE = "django_s3_storage.storage.StaticS3Storage"
+
+
+S3_BUCKET = config['S3_BUCKET']
+
+AWS_S3_BUCKET_NAME_STATIC = S3_BUCKET
+
+STATIC_URL = "https://s3.eu-west-2.amazonaws.com/%s/" % S3_BUCKET
 
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 # main_with_json.py
 
-with open(os.path.join(BASE_DIR, 'config.json'), 'r') as f:
-    config = json.load(f)
+
 
 
 DATABASES = {
@@ -92,8 +116,6 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
